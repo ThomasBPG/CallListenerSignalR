@@ -206,9 +206,6 @@ Expected sequence in the LWC:
   checks `X-Api-Key`, but the hub itself doesn't gate connections, and CORS
   is wide open. Fine for a single-user sandbox demo, not fine beyond that.
   Full detail: [signalr-server/README.md](signalr-server/README.md#known-limitations-demo-only-posture).
-- **The Recommendations panel isn't wired up in the UI.** The LWC's JS calls
-  `knowledgeSearch`/`resolution` and tracks results, but the template still
-  renders a static "Not yet implemented" placeholder.
 - **No transcript durability during the call.** Only the final closed
   transcript persists; mid-call chunks live only in-memory on the SignalR
   broadcast.
