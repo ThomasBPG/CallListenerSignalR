@@ -1,0 +1,10 @@
+.sfdx/
+.sf/
+.vscode/
+node_modules/
+*.log
+venv/
+.venv/
+scripts/credentials
+signalr-server/publish/
+signalr-server/publish.zip

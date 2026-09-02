@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>Cuc5cLqtgnO6Hq9DXVJ2ZK+rDzD8j6LSkfY9Kwfx7Ig=_1</activeVersionIdentifier>
+    <developerName>CreateCallRecommendation</developerName>
+    <masterLabel>CreateCallRecommendation</masterLabel>
+    <overridable>false</overridable>
+    <templateVersions>
+        <content>The following includes a real-time transcription from a voice call. Generate a short maximum 50 words resolution based on the knowledge in section KNOWLEDGE.
+
+TRANSCRIPTION
+&quot;&quot;&quot;&quot;
+{!$Input:transcription}
+&quot;&quot;&quot;&quot;
+
+KNOWLEDGE
+&quot;&quot;&quot;&quot;
+{!$EinsteinSearch:Knowledge_Article_Version_Retriever_1Cx_i0T752e9b06.results} 
+</content>
+        <fileDroppingStrategy>{&quot;dropFilesBy&quot;:&quot;LAST_MODIFIED_DATE&quot;,&quot;dropFileStartingWith&quot;:&quot;OLDEST&quot;}</fileDroppingStrategy>
+        <inputs>
+            <apiName>transcription</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>transcription</masterLabel>
+            <referenceName>Input:transcription</referenceName>
+            <required>true</required>
+        </inputs>
+        <isCitationEnabled>false</isCitationEnabled>
+        <primaryModel>sfdc_ai__DefaultVertexAIGemini35Flash</primaryModel>
+        <status>Published</status>
+        <templateDataProviders>
+            <definition>invocable://getEinsteinRetrieverResults/Knowledge_Article_Version_Retriever_1Cx_i0T752e9b06</definition>
+            <label>Knowledge Article Version Retriever</label>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>searchText</parameterName>
+                <valueExpression>{!$Input:transcription}</valueExpression>
+            </parameters>
+            <parameters>
+                <definition>primitive://List&lt;String&gt;</definition>
+                <isRequired>false</isRequired>
+                <parameterName>outputFieldNames</parameterName>
+                <valueExpression>[&quot;Description&quot;]</valueExpression>
+            </parameters>
+            <parameters>
+                <definition>primitive://Integer</definition>
+                <isRequired>false</isRequired>
+                <parameterName>resultCount</parameterName>
+                <valueExpression>10</valueExpression>
+            </parameters>
+            <referenceName>EinsteinSearch:Knowledge_Article_Version_Retriever_1Cx_i0T752e9b06</referenceName>
+        </templateDataProviders>
+        <versionIdentifier>Cuc5cLqtgnO6Hq9DXVJ2ZK+rDzD8j6LSkfY9Kwfx7Ig=_1</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

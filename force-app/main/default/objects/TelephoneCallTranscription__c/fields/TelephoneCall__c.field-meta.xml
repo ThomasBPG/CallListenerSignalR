@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TelephoneCall__c</fullName>
+    <label>Telephone Call</label>
+    <type>MasterDetail</type>
+    <referenceTo>TelephoneCall__c</referenceTo>
+    <relationshipName>Transcriptions</relationshipName>
+    <relationshipLabel>Telephone Call Transcriptions</relationshipLabel>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

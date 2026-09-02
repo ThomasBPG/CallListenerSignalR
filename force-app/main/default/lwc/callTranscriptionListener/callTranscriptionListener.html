@@ -1,0 +1,57 @@
+<template>
+    <lightning-card title="Call Transcription Listener" icon-name="utility:call">
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <p class="slds-text-heading_small">{statusMessage}</p>
+
+            <lightning-input
+                type="checkbox"
+                label="Show incoming transcription"
+                checked={showTranscription}
+                onchange={handleToggleTranscription}
+            ></lightning-input>
+
+            <template if:true={showTranscriptFeed}>
+                <div class="slds-box slds-scrollable_y slds-m-top_small" style="max-height: 200px;">
+                    <template for:each={transcriptChunks} for:item="chunk" for:index="index">
+                        <p key={chunk} class="slds-text-body_small">{chunk}</p>
+                    </template>
+                </div>
+            </template>
+
+            <div class="slds-box slds-theme_shade slds-m-top_medium">
+                <p class="slds-text-title_caps">Recommendations</p>
+
+                <template if:true={isListening}>
+                    <p class="slds-text-heading_small slds-m-top_small">Relevant Knowledge Articles</p>
+                    <template if:true={knowledgeArticles.length}>
+                        <ul class="slds-list_dotted">
+                            <template for:each={knowledgeArticles} for:item="article">
+                                <li key={article.articleId} class="slds-m-vertical_x-small">
+                                    <a href={article.url} target="_blank">{article.title}</a>
+                                    <p class="slds-text-body_small">{article.snippet}</p>
+                                </li>
+                            </template>
+                        </ul>
+                    </template>
+                    <template if:false={knowledgeArticles.length}>
+                        <p class="slds-text-body_small">No relevant Knowledge Articles found yet.</p>
+                    </template>
+
+                    <p class="slds-text-heading_small slds-m-top_medium">Suggested Resolution</p>
+                    <template if:true={isResolutionLoading}>
+                        <lightning-spinner alternative-text="Generating resolution" size="small"></lightning-spinner>
+                    </template>
+                    <template if:false={isResolutionLoading}>
+                        <p class="slds-text-body_small">{resolutionText}</p>
+                    </template>
+                </template>
+
+                <template if:false={isListening}>
+                    <p class="slds-text-body_small">
+                        Knowledge Article and resolution recommendations will appear here once a call starts.
+                    </p>
+                </template>
+            </div>
+        </div>
+    </lightning-card>
+</template>
