@@ -110,27 +110,3 @@ metadata file. If a future `sf project deploy start` for this specific file
 fails with `UNKNOWN_EXCEPTION (-315522575)` (a reproducible quirk in some
 orgs, unrelated to content), fall back to a direct SOAP `updateMetadata`
 call against `/services/Soap/m/<version>` instead of retrying the CLI deploy.
-
-**Deploying `force-app` to a fresh org will fail.** `callTranscriptionListener.js`
-imports `@salesforce/apex/CallListenerRecommendation.knowledgeSearch` /
-`.resolution`. `CallListenerRecommendation.cls` (and its test class) are not
-committed anywhere in this repo's git history — they exist only as
-uncommitted files in a sibling checkout and as already-deployed, `Active`
-Apex in this shared dev org. A clean-room `sf project deploy start` will fail
-to compile the LWC until whoever owns that class commits it. Separately,
-deploying `force-app/main/default/customMetadata/SignalR_Config.Default.md-meta.xml`
-by itself has reproducibly failed with `UNKNOWN_EXCEPTION (-315522575)` in
-this org/CLI combination (not content-related — the org's live record already
-matches source byte-for-byte); if you hit this, verify with
-`sf data query --query "SELECT Hub_Url__c, Access_Token__c FROM SignalR_Config__mdt"`
-before assuming the deploy actually failed to apply.
-
-**The Recommendations panel is currently dead in the UI.** The LWC's JS
-actively calls `knowledgeSearch`/`resolution` and tracks their results, but
-`callTranscriptionListener.html` still renders a static "Not yet
-implemented." placeholder and never binds `knowledgeArticles` /
-`resolutionText` / `isResolutionLoading`. This is out of this plan's scope
-(the HTML template was intentionally left untouched), but means the feature
-described in the design spec cannot render from this branch alone, and the
-JS does discarded (LLM-backed, for `resolution`) work every few seconds for
-nothing until the template is wired up.

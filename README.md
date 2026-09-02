@@ -10,6 +10,8 @@ natively — transcription chunks are pushed in from an external system and
 fanned out to the browser over a self-hosted SignalR server rather than
 Salesforce's Platform Event bus (see [Architecture](#architecture) for why).
 
+Build with Anthropic Claude Code Superpowers. 
+
 > **This is a demo/POT, not a production build.** Auth is a single shared
 > secret, there's no per-user hub authorization, and the "Recommendations"
 > panel UI isn't fully wired up yet. See
